@@ -8,11 +8,11 @@ const Home: NextPage = () => {
 
 
       <main>
-        <Box sx={{textAlign:'center'}}>
+        <Box sx={{textAlign:'center',marginBottom:2}}>
           <Typography variant="h1">To Do</Typography>
         </Box>
 
-        <ToDoGroup name="Family"/>
+        <ToDoGroup name="Family" items={["Buy a car","Move out of crib","Ski with the hommies","Mansplain what slime is"]}/>
         
         
       </main>

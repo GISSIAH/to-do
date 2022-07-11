@@ -119,7 +119,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         },
       },
       button: {
-        fontFamily: "Open Sans",
+        
       }
     }
   })
