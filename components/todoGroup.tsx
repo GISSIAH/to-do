@@ -4,17 +4,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import ToDoItem from './todoItem'
 import { useState } from 'react'
+import { addItem } from '../storage/storage';
 
 interface props {
     name: string,
-    items: Array<string>
+    items: Array<string>,
+    onItemAdded : ()=>void
 }
 
 const ToDoGroup: NextPage<props> = (props) => {
-    const { name, items } = props
+    const { name, items, onItemAdded } = props
 
     const [dialogOpen,setDialogOpen] = useState(false)
     const [newItemDialog, setNewItemDialog] = useState(false)
+    const [item,setItem] = useState<string>("")
 
     return (
         <Box component={Paper} sx={{ px: 2, py: 2 }}>
@@ -56,8 +59,12 @@ const ToDoGroup: NextPage<props> = (props) => {
                     <CloseIcon onClick={() => { setNewItemDialog(false) }} />
                 </DialogTitle>
                 <DialogContent sx={{display:'flex',flexDirection:'column',gap:2}}>
-                    <TextField sx={{marginTop:2}} variant='outlined' label="Item" />
-                    <Button variant="contained">ADD</Button>
+                    <TextField sx={{marginTop:2}} variant='outlined' label="Item" onChange={(e)=>{setItem(e.target.value)}}/>
+                    <Button variant="contained" onClick={()=>{
+                        addItem(item,name)
+                        onItemAdded()
+                        setNewItemDialog(false)
+                    }}>ADD</Button>
                 </DialogContent>
 
             </Dialog>

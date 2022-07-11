@@ -14,6 +14,11 @@ const Home: NextPage = () => {
     setGroups(todo.groups)
 
   }, [])
+
+  const itemAdded = ()=>{
+    const todo = getTodo()
+    setGroups(todo.groups)
+  }
   return (
     <div>
       <main>
@@ -42,20 +47,14 @@ const Home: NextPage = () => {
           {
             groups.map((item, i) => {
               return (
-                <ToDoGroup name={item.name} items={item.items} key={i} />
+                <ToDoGroup name={item.name} items={item.items} key={i} onItemAdded={itemAdded} />
               )
             })
           }
 
         </Box>
-
-
-
       </main>
-
-
     </div>
   )
 }
-
 export default Home

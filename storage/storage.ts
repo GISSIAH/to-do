@@ -28,3 +28,27 @@ export const addGroup = (group: { name: string; items: Array<string> }) => {
     }
   }
 };
+
+export function deleteGroup(name:string){
+  if (typeof window !== "undefined") {
+    const todo = getTodo()
+
+    todo.groups.filter(group=>group.name !== name)
+
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }
+}
+
+export function addItem(item:string,groupName:string){
+  if (typeof window !== "undefined") {
+    const todo = getTodo()
+
+    todo.groups.forEach(group=>{
+      if(group.name===groupName){
+        group.items.push(item)
+      }
+    })
+
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }
+}
