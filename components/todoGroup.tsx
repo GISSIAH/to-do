@@ -31,7 +31,7 @@ const ToDoGroup: NextPage<props> = (props) => {
 
                 {items.slice(0,3).map((item, i) => {
                     return (
-                        <ToDoItem title={item} key={i} />
+                        <ToDoItem title={item} group={name} key={i} />
                     )
                 }
                 )}
@@ -46,7 +46,7 @@ const ToDoGroup: NextPage<props> = (props) => {
                 <DialogContent sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {items.map((item, i) => {
                         return (
-                            <ToDoItem title={item} key={i} />
+                            <ToDoItem title={item} group={name} key={i} />
                         )
                     }
                     )}

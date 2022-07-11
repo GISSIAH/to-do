@@ -52,3 +52,24 @@ export function addItem(item:string,groupName:string){
     localStorage.setItem("todo", JSON.stringify(todo));
   }
 }
+
+export function deleteItem(item:string, groupName: string){
+  if (typeof window !== "undefined") {
+    const todo = getTodo()
+
+    
+    let tempGroup = todo.groups.filter((group) => group.name == groupName)
+    
+    const idx = tempGroup[0].items.indexOf(item)
+
+    if(idx > -1 ){
+      let x = tempGroup[0].items.filter(groupItem => groupItem !== item)
+
+      todo.groups.map(  group => group.name === groupName ? (group.items = x) : group )
+
+      localStorage.setItem("todo", JSON.stringify(todo));
+    }
+
+    
+  }
+}
