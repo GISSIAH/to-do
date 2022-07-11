@@ -1,4 +1,4 @@
-import {group} from "../types/group"
+import { group } from "../types/group";
 
 export function getTodo(): { groups: Array<group> } {
   let todo: { groups: Array<group> } = {
@@ -8,9 +8,11 @@ export function getTodo(): { groups: Array<group> } {
     const strGroups = localStorage.getItem("todo");
     const jsonTodo = JSON.parse(strGroups || "{}");
 
-    jsonTodo.groups.forEach((element: group) => {
-      todo.groups.push(element);
-    });
+    if (jsonTodo.groups) {
+      jsonTodo.groups.forEach((element: group) => {
+        todo.groups.push(element);
+      });
+    }
   }
   return todo;
 }
@@ -29,47 +31,46 @@ export const addGroup = (group: { name: string; items: Array<string> }) => {
   }
 };
 
-export function deleteGroup(name:string){
+export function deleteGroup(name: string) {
   if (typeof window !== "undefined") {
-    const todo = getTodo()
+    const todo = getTodo();
 
-    todo.groups.filter(group=>group.name !== name)
+    todo.groups.filter((group) => group.name !== name);
 
     localStorage.setItem("todo", JSON.stringify(todo));
   }
 }
 
-export function addItem(item:string,groupName:string){
+export function addItem(item: string, groupName: string) {
   if (typeof window !== "undefined") {
-    const todo = getTodo()
+    const todo = getTodo();
 
-    todo.groups.forEach(group=>{
-      if(group.name===groupName){
-        group.items.push(item)
+    todo.groups.forEach((group) => {
+      if (group.name === groupName) {
+        group.items.push(item);
       }
-    })
+    });
 
     localStorage.setItem("todo", JSON.stringify(todo));
   }
 }
 
-export function deleteItem(item:string, groupName: string){
+export function deleteItem(item: string, groupName: string) {
   if (typeof window !== "undefined") {
-    const todo = getTodo()
+    const todo = getTodo();
 
-    
-    let tempGroup = todo.groups.filter((group) => group.name == groupName)
-    
-    const idx = tempGroup[0].items.indexOf(item)
+    let tempGroup = todo.groups.filter((group) => group.name == groupName);
 
-    if(idx > -1 ){
-      let x = tempGroup[0].items.filter(groupItem => groupItem !== item)
+    const idx = tempGroup[0].items.indexOf(item);
 
-      todo.groups.map(  group => group.name === groupName ? (group.items = x) : group )
+    if (idx > -1) {
+      let x = tempGroup[0].items.filter((groupItem) => groupItem !== item);
+
+      todo.groups.map((group) =>
+        group.name === groupName ? (group.items = x) : group
+      );
 
       localStorage.setItem("todo", JSON.stringify(todo));
     }
-
-    
   }
 }

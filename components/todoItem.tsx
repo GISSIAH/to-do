@@ -5,17 +5,21 @@ import { deleteItem } from "../storage/storage";
 
 interface props {
     title: string,
-    group:string
+    group:string,
+    onItemDeleted : ()=>void
 
 }
 
 const ToDoItem : NextPage<props> = (props)=>{
-    const {title, group} = props
+    const {title, group,onItemDeleted} = props
     return(
         <Box sx={{display:'flex',justifyContent:'space-between'}}>
             <Typography>{title}</Typography>
             <DeleteIcon onClick={()=>{
-                deleteItem(title,group)}} color="warning"/>
+                deleteItem(title,group)
+                onItemDeleted()
+                }} color="warning"/>
+                
         </Box>
     )
 }
