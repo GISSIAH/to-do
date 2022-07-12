@@ -3,7 +3,7 @@ import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField 
 import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
 import { useEffect, useState } from 'react'
-import {group} from "../types/group"
+import { group } from "../types/group"
 const Home: NextPage = () => {
   const [groups, setGroups] = useState<Array<group>>([])
   const [newGroupDialog, setNewGroupDialog] = useState(false)
@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
   }, [])
 
-  const itemAdded = ()=>{
+  const itemAdded = () => {
     const todo = getTodo()
     setGroups(todo.groups)
   }
@@ -43,11 +43,11 @@ const Home: NextPage = () => {
             }}>Save</Button>
           </DialogContent>
         </Dialog>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {
             groups.map((item, i) => {
               return (
-                <ToDoGroup name={item.name} items={item.items} key={i} onItemAdded={itemAdded} />
+                <ToDoGroup name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
               )
             })
           }

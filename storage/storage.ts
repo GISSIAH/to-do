@@ -34,8 +34,11 @@ export const addGroup = (group: { name: string; items: Array<string> }) => {
 export function deleteGroup(name: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
-
-    todo.groups.filter((group) => group.name !== name);
+ 
+    
+    const newGroups = todo.groups.filter((group) => group.name !== name)
+    
+    todo.groups = newGroups
 
     localStorage.setItem("todo", JSON.stringify(todo));
   }

@@ -1,0 +1,62 @@
+import type { NextPage } from 'next'
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import React, { useState } from 'react';
+import { deleteGroup } from '../../storage/storage';
+
+
+
+interface props{
+    group: string,
+    setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ,
+    onItemChanged : ()=>void
+}
+
+const GroupMenu: NextPage<props> = (props) => {
+    const {group,setNewItemDialog,onItemChanged} = props
+    const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLButtonElement | null>()
+    const open = Boolean(anchorEl);
+    return (
+        <div>
+            <IconButton onClick={(e) => { setAnchorEl(e.currentTarget) }}>
+                <MoreVertIcon />
+            </IconButton>
+            <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                MenuListProps={{
+                    'aria-labelledby': 'long-button',
+                }}
+                open={open}
+                onClose={() => { setAnchorEl(null) }}
+                PaperProps={{
+                    style: {
+                        maxHeight: 'fit-content'
+                    },
+                }}
+            >
+                <MenuItem onClick={() => {
+                    setAnchorEl(null)
+                    setNewItemDialog(true)
+                }}>
+                    Add Item
+                </MenuItem>
+                <MenuItem onClick={()=>{
+                    deleteGroup(group)
+                    onItemChanged()
+                    setAnchorEl(null)
+                    
+                }}>
+                    Delete Group
+                </MenuItem>
+                <MenuItem>
+                    Change Color
+                </MenuItem>
+            </Menu>
+        </div>
+    )
+}
+
+export default GroupMenu
