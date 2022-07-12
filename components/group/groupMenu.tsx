@@ -43,6 +43,13 @@ const GroupMenu: NextPage<props> = (props) => {
                 }}>
                     Add Item
                 </MenuItem>
+                <MenuItem onClick={() => {
+                    pinGroup(group)
+                    onItemChanged()
+                    setAnchorEl(null)
+                }}>
+                    Pin Group
+                </MenuItem>
                 <MenuItem onClick={()=>{
                     deleteGroup(group)
                     onItemChanged()
@@ -51,13 +58,7 @@ const GroupMenu: NextPage<props> = (props) => {
                 }}>
                     Delete Group
                 </MenuItem>
-                <MenuItem onClick={()=>{
-                    pinGroup(group)
-                    onItemChanged()
-                    setAnchorEl(null)
-                }}>
-                    Pin Group
-                </MenuItem>
+                
             </Menu>
         </div>
     )

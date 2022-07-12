@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
+import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField} from '@mui/material'
 import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
 import { useEffect, useState } from 'react'
@@ -10,9 +10,7 @@ const Home: NextPage = () => {
   const [newGroup, setNewGroup] = useState("")
   useEffect(() => {
     const todo = getTodo()
-
     setGroups(todo.groups)
-
   }, [])
 
   const itemAdded = () => {
@@ -21,7 +19,7 @@ const Home: NextPage = () => {
   }
   return (
     <div>
-      <main>
+      <Box>
         <Box sx={{ textAlign: 'center', marginBottom: 2, }}>
           <Typography variant="h1">To Do</Typography>
         </Box>
@@ -59,9 +57,8 @@ const Home: NextPage = () => {
               )
             })
           }
-
         </Box>
-      </main>
+      </Box>
     </div>
   )
 }
