@@ -21,9 +21,13 @@ const ToDoGroup: NextPage<props> = (props) => {
 
 
     return (
-        <Box component={Paper} sx={{ px: 2, py: 2 }}>
+        <Box component={Paper} sx={{ px: 2, py: 2}}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant="h3">{name}</Typography>
+                <Box sx={{display:'flex',flexDirection:'column'}}>
+                    <Typography variant="h3">{name}</Typography>
+                    <Typography variant='caption'>{items.length+ " items"}</Typography>
+                </Box>
+                
                 <GroupMenu group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged}/>
             </Box>
 
@@ -36,7 +40,10 @@ const ToDoGroup: NextPage<props> = (props) => {
                     )
                 }
                 )}
-                <Button sx={{ marginTopn: 2 }} onClick={() => { setDialogOpen(true) }} variant='outlined'>View All</Button>
+                {
+                    (items.length > 3) ? <Button sx={{ marginTopn: 2 }} onClick={() => { setDialogOpen(true) }} color="primary">View All</Button> : null
+                }
+                
             </Box>
 
             <Dialog open={dialogOpen} onClose={() => { setDialogOpen(false) }}>

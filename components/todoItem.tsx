@@ -13,7 +13,7 @@ interface props {
 const ToDoItem : NextPage<props> = (props)=>{
     const {title, group,onItemDeleted} = props
     return(
-        <Box sx={{display:'flex',justifyContent:'space-between'}}>
+        <Box sx={{display:'flex',justifyContent:'space-between',px:1}}>
             <Typography>{title}</Typography>
             <DeleteIcon onClick={()=>{
                 deleteItem(title,group)
