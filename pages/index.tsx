@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <main>
-        <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
+        <Box sx={{ textAlign: 'center', marginBottom: 2, }}>
           <Typography variant="h1">To Do</Typography>
         </Box>
         <Button sx={{ marginBottom: 2 }} variant='contained' onClick={() => { setNewGroupDialog(true) }}>New Group</Button>
@@ -35,7 +35,8 @@ const Home: NextPage = () => {
             <Button variant="contained" color="success" onClick={() => {
               addGroup({
                 name: newGroup,
-                items: []
+                items: [],
+                pinned: false
               })
               const todo = getTodo()
               setGroups(todo.groups)
@@ -45,7 +46,14 @@ const Home: NextPage = () => {
         </Dialog>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {
-            groups.map((item, i) => {
+            groups.filter(group => group.pinned == true).map((item, i) => {
+              return (
+                <ToDoGroup name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+              )
+            })
+          }
+          {
+            groups.filter(group => group.pinned !== true).map((item, i) => {
               return (
                 <ToDoGroup name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
               )

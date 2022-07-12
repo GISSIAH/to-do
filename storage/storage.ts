@@ -17,7 +17,7 @@ export function getTodo(): { groups: Array<group> } {
   return todo;
 }
 
-export const addGroup = (group: { name: string; items: Array<string> }) => {
+export const addGroup = (group: group) => {
   if (typeof window !== "undefined") {
     let todo = getTodo();
     if (todo.groups.length == 0) {
@@ -75,5 +75,16 @@ export function deleteItem(item: string, groupName: string) {
 
       localStorage.setItem("todo", JSON.stringify(todo));
     }
+  }
+}
+
+export function pinGroup(groupName:string){
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+
+    let newTodoGroups = todo.groups.map(group => (group.name === groupName ) ? {...group,pinned:true}  : {...group,pinned:false} )
+
+    todo.groups = newTodoGroups
+    localStorage.setItem("todo", JSON.stringify(todo));
   }
 }

@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from 'react';
-import { deleteGroup } from '../../storage/storage';
+import { deleteGroup , pinGroup } from '../../storage/storage';
 
 
 
@@ -51,8 +51,12 @@ const GroupMenu: NextPage<props> = (props) => {
                 }}>
                     Delete Group
                 </MenuItem>
-                <MenuItem>
-                    Change Color
+                <MenuItem onClick={()=>{
+                    pinGroup(group)
+                    onItemChanged()
+                    setAnchorEl(null)
+                }}>
+                    Pin Group
                 </MenuItem>
             </Menu>
         </div>
