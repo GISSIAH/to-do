@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       borderRadius: 8
     },
     palette: {
+      mode:"dark",
       common: {
         white: "#f1faee"
       },
