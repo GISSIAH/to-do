@@ -14,11 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         white: "#f1faee"
       },
       primary: {
-        main: "#1d3557",
-        light: "#457b9d"
+        main: "#758bfd",
+
       },
       secondary: {
-        main: "#e63946",
+        main: "#aeb8fe",
       },
 
 

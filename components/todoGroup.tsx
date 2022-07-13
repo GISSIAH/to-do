@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Box, Typography, Paper, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
+import { Box, Typography, Paper, Button, Dialog, DialogContent, DialogTitle, TextField, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import ToDoItem from './todoItem'
 import { useState } from 'react'
@@ -21,14 +21,14 @@ const ToDoGroup: NextPage<props> = (props) => {
 
 
     return (
-        <Box component={Paper} sx={{ px: 2, py: 2}}>
+        <Box component={Paper} sx={{ px: 2, py: 2 }} boxShadow={24}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box sx={{display:'flex',flexDirection:'column'}}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h3">{name}</Typography>
-                    <Typography variant='caption'>{items.length+ " items"}</Typography>
+                    <Typography variant='caption'>{items.length + " items"}</Typography>
                 </Box>
-                
-                <GroupMenu group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged}/>
+
+                <GroupMenu group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} />
             </Box>
 
 
@@ -41,15 +41,17 @@ const ToDoGroup: NextPage<props> = (props) => {
                 }
                 )}
                 {
-                    (items.length > 3) ? <Button sx={{ marginTopn: 2 }} onClick={() => { setDialogOpen(true) }} color="primary">View All</Button> : null
+                    (items.length > 3) ? <Button sx={{ marginTopn: 2 }} onClick={() => { setDialogOpen(true) }} color="secondary">View All</Button> : null
                 }
-                
+
             </Box>
 
             <Dialog open={dialogOpen} onClose={() => { setDialogOpen(false) }}>
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h3">{name}</Typography>
-                    <CloseIcon onClick={() => { setDialogOpen(false) }} />
+                    <IconButton onClick={() => { setDialogOpen(false) }}>
+                        <CloseIcon />
+                    </IconButton>
                 </DialogTitle>
                 <DialogContent sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {items.map((item, i) => {
@@ -64,11 +66,13 @@ const ToDoGroup: NextPage<props> = (props) => {
             <Dialog open={newItemDialog} onClose={() => { setNewItemDialog(false) }}>
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography>{`Add new item to ${name}`}</Typography>
-                    <CloseIcon onClick={() => { setNewItemDialog(false) }} />
+                    <IconButton onClick={() => { setNewItemDialog(false) }}>
+                        <CloseIcon  />
+                    </IconButton>
                 </DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <TextField sx={{ marginTop: 2 }} variant='outlined' label="Item" onChange={(e) => { setItem(e.target.value) }} />
-                    <Button variant="contained" onClick={() => {
+                    <Button variant="contained" color="success" onClick={() => {
                         addItem(item, name)
                         onItemChanged()
                         setNewItemDialog(false)

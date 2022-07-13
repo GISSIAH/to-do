@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
+import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
 import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
 import { useEffect, useState } from 'react'
@@ -26,7 +27,6 @@ const Home: NextPage = () => {
         <Box
           display="flex"
           flexDirection="row"
-
           justifyContent={{
             xs: "flex-start",
             sm: "flex-start",
@@ -36,8 +36,11 @@ const Home: NextPage = () => {
         </Box>
 
         <Dialog open={newGroupDialog} onClose={() => { setNewGroupDialog(false) }}>
-          <DialogTitle>
-            Add New Group
+          <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography>Add New Group</Typography>
+            <IconButton onClick={() => { setNewGroupDialog(false) }}>
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField sx={{ marginTop: 2 }} label="Group" variant='outlined' onChange={(e) => { setNewGroup(e.target.value) }} />
