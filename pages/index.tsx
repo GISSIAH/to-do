@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField} from '@mui/material'
+import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
 import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,18 @@ const Home: NextPage = () => {
         <Box sx={{ textAlign: 'center', marginBottom: 2, }}>
           <Typography variant="h1">To Do</Typography>
         </Box>
-        <Button sx={{ marginBottom: 2 }} variant='contained' onClick={() => { setNewGroupDialog(true) }}>New Group</Button>
+        <Box
+          display="flex"
+          flexDirection="row"
+
+          justifyContent={{
+            xs: "flex-start",
+            sm: "flex-start",
+            md: "center"
+          }}>
+          <Button sx={{ marginBottom: 2 }} variant='contained' onClick={() => { setNewGroupDialog(true) }}>New Group</Button>
+        </Box>
+
         <Dialog open={newGroupDialog} onClose={() => { setNewGroupDialog(false) }}>
           <DialogTitle>
             Add New Group
@@ -42,7 +53,25 @@ const Home: NextPage = () => {
             }}>Save</Button>
           </DialogContent>
         </Dialog>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <Box
+          display="flex"
+          flexDirection={{
+            xs: "column",
+            sm: "column",
+            md: "row",
+          }}
+          flexWrap="wrap"
+          justifyContent={{
+            xs: "flex-start",
+            sm: "flex-start",
+            md: "center"
+          }}
+          gap={{
+            xs: 4,
+            sm: 4,
+            md: 8
+          }}
+        >
           {
             groups.filter(group => group.pinned == true).map((item, i) => {
               return (
