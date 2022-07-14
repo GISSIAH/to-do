@@ -1,4 +1,5 @@
 import { group } from "../types/group";
+import { item } from "../types/item";
 
 export function getTodo(): { groups: Array<group> } {
   let todo: { groups: Array<group> } = {
@@ -50,7 +51,7 @@ export function addItem(item: string, groupName: string) {
 
     todo.groups.forEach((group) => {
       if (group.name === groupName) {
-        group.items.push(item);
+        group.items.push({title:item,date: new Date()});
       }
     });
 
@@ -58,23 +59,18 @@ export function addItem(item: string, groupName: string) {
   }
 }
 
-export function deleteItem(item: string, groupName: string) {
+export function deleteItem(item: item, groupName: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
     let tempGroup = todo.groups.filter((group) => group.name == groupName);
-
-    const idx = tempGroup[0].items.indexOf(item);
-
-    if (idx > -1) {
-      let x = tempGroup[0].items.filter((groupItem) => groupItem !== item);
-
-      todo.groups.map((group) =>
-        group.name === groupName ? (group.items = x) : group
-      );
-
-      localStorage.setItem("todo", JSON.stringify(todo));
-    }
+    //console.log(tempGroup);
+    
+    const newItems = tempGroup[0].items.filter((itemArr)=> itemArr.title !== item.title);
+    todo.groups.map((group) =>
+      group.name === groupName ? (group.items = newItems) : group
+    );
+    localStorage.setItem("todo", JSON.stringify(todo));
   }
 }
 

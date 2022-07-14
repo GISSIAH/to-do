@@ -5,12 +5,14 @@ import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
 import { useEffect, useState } from 'react'
 import { group } from "../types/group"
+import { item } from '../types/item';
 const Home: NextPage = () => {
   const [groups, setGroups] = useState<Array<group>>([])
   const [newGroupDialog, setNewGroupDialog] = useState(false)
   const [newGroup, setNewGroup] = useState("")
   useEffect(() => {
     const todo = getTodo()
+    console.log(getOldestItem())
     setGroups(todo.groups)
   }, [])
 
@@ -95,3 +97,12 @@ const Home: NextPage = () => {
   )
 }
 export default Home
+
+function getOldestItem():item{
+  const todo = getTodo()
+  var oldestItem:item = {title:"",date:new Date()}
+  for(let i=0; i< todo.groups.length;i++){
+    
+  }
+  return oldestItem
+}

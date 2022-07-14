@@ -2,21 +2,21 @@ import { NextPage } from "next";
 import { Box, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteItem } from "../storage/storage";
-
+import {item} from "../types/item"
 interface props {
-    title: string,
+    item: item,
     group:string,
     onItemDeleted : ()=>void
 
 }
 
 const ToDoItem : NextPage<props> = (props)=>{
-    const {title, group,onItemDeleted} = props
+    const {item, group,onItemDeleted} = props
     return(
         <Box sx={{display:'flex',justifyContent:'space-between',px:1}}>
-            <Typography>{title}</Typography>
+            <Typography>{item.title}</Typography>
             <DeleteIcon onClick={()=>{
-                deleteItem(title,group)
+                deleteItem(item,group)
                 onItemDeleted()
                 }} color="warning"/>
                 

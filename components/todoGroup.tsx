@@ -5,10 +5,11 @@ import ToDoItem from './todoItem'
 import { useState } from 'react'
 import { addItem } from '../storage/storage';
 import GroupMenu from './group/groupMenu';
+import { item } from '../types/item';
 
 interface props {
     name: string,
-    items: Array<string>,
+    items: Array<item>,
     onItemChanged: () => void
 }
 
@@ -36,7 +37,7 @@ const ToDoGroup: NextPage<props> = (props) => {
 
                 {items.slice(0, 3).map((item, i) => {
                     return (
-                        <ToDoItem title={item} group={name} key={i} onItemDeleted={onItemChanged} />
+                        <ToDoItem item={item} group={name} key={i} onItemDeleted={onItemChanged} />
                     )
                 }
                 )}
@@ -56,7 +57,7 @@ const ToDoGroup: NextPage<props> = (props) => {
                 <DialogContent sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {items.map((item, i) => {
                         return (
-                            <ToDoItem title={item} group={name} key={i} onItemDeleted={onItemChanged} />
+                            <ToDoItem item={item} group={name} key={i} onItemDeleted={onItemChanged} />
                         )
                     }
                     )}
