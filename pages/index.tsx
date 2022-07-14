@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField, IconButton } from '@mui/material'
+import { Box, Typography, Button, Dialog, DialogContent, DialogTitle, TextField, IconButton, Alert, AlertTitle } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import ToDoGroup from '../components/todoGroup'
 import { getTodo, addGroup } from '../storage/storage'
@@ -10,10 +10,16 @@ const Home: NextPage = () => {
   const [groups, setGroups] = useState<Array<group>>([])
   const [newGroupDialog, setNewGroupDialog] = useState(false)
   const [newGroup, setNewGroup] = useState("")
+  const [alert,setAlert] = useState(true)
+  const [oldestItem,setOldestItem] = useState<item>({title:"",date:new Date()})
   useEffect(() => {
     const todo = getTodo()
-    console.log(getOldestItem())
+    setOldestItem(getOldestItem())
     setGroups(todo.groups)
+
+    setTimeout(() => {
+      setAlert(false)
+    }, 20000)
   }, [])
 
   const itemAdded = () => {
@@ -22,7 +28,15 @@ const Home: NextPage = () => {
   }
   return (
     <div>
-      <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        {
+          (alert && oldestItem.title !== "") ?
+            <Alert severity="info" onClose={() => {setAlert(false) }}>
+              <AlertTitle>Have you finished</AlertTitle>
+              <Typography>{oldestItem.title}</Typography>
+            </Alert> : null
+        }
+
         <Box sx={{ textAlign: 'center', marginBottom: 2, }}>
           <Typography variant="h1">To Do</Typography>
         </Box>
@@ -98,11 +112,20 @@ const Home: NextPage = () => {
 }
 export default Home
 
-function getOldestItem():item{
+function getOldestItem(): item {
   const todo = getTodo()
-  var oldestItem:item = {title:"",date:new Date()}
-  for(let i=0; i< todo.groups.length;i++){
-    
+  var oldestItem: item = { title: "", date: new Date() }
+  for (let i = 0; i < todo.groups.length; i++) {
+
+    if (!todo.groups[i].items[0]) {
+      continue
+    }
+    else {
+
+      if (new Date(todo.groups[i].items[0].date).getTime() < new Date(oldestItem.date).getTime()) {
+        oldestItem = todo.groups[i].items[0]
+      }
+    }
   }
   return oldestItem
 }
