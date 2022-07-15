@@ -35,7 +35,7 @@ const MapDialog: NextPage<props> = (props)=>{
                 </IconButton>
             </DialogTitle>
             <DialogContent sx={{display:'flex',flexDirection:'column',gap:4}}>
-                <TextField variant="outlined" label="Title" onChange={(e)=>{setTitle(e.target.value)}}/>
+                <TextField sx={{marginTop:2}} variant="outlined" label="Title" onChange={(e)=>{setTitle(e.target.value)}}/>
 
                 <div style={{ width: "320px", height: "500px" }}>
                     <MapContainer style={{ width: "100%", height: "100%" }} center={[-13.92323, 33.7323]} zoom={11} scrollWheelZoom={true}>

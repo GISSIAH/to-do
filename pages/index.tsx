@@ -113,14 +113,14 @@ const Home: NextPage = () => {
               {
                 groups.filter(group => group.pinned == true).map((item, i) => {
                   return (
-                    <ToDoGroup name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+                    <ToDoGroup locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
                   )
                 })
               }
               {
                 groups.filter(group => group.pinned !== true).map((item, i) => {
                   return (
-                    <ToDoGroup name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+                    <ToDoGroup locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
                   )
                 })
               }

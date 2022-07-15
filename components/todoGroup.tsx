@@ -13,11 +13,12 @@ const MapDialog = dynamic(() => import("../components/map/mapDialog"), { ssr: fa
 interface props {
     name: string,
     items: Array<item>,
+    locationItemsCount: number,
     onItemChanged: () => void
 }
 
 const ToDoGroup: NextPage<props> = (props) => {
-    const { name, items, onItemChanged } = props
+    const { name, items,locationItemsCount, onItemChanged } = props
 
     const [dialogOpen, setDialogOpen] = useState(false)
     const [newItemDialog, setNewItemDialog] = useState(false)
@@ -30,7 +31,7 @@ const ToDoGroup: NextPage<props> = (props) => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h3">{name}</Typography>
-                    <Typography variant='caption'>{items.length + " items"}</Typography>
+                    <Typography variant='caption'>{(items.length+locationItemsCount) + " items"}</Typography>
                 </Box>
 
                 <GroupMenu setLocationDialog={setLocationDialog} group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} />
