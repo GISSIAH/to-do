@@ -7,7 +7,9 @@ import { useEffect, useState } from 'react'
 import { group } from "../types/group"
 import { item } from '../types/item';
 import TabPanel from '../components/tab/tab';
+import dynamic from 'next/dynamic';
 
+const Map = dynamic(() => import("../components/map/map"), { ssr: false })
 const Home: NextPage = () => {
   const [groups, setGroups] = useState<Array<group>>([])
   const [newGroupDialog, setNewGroupDialog] = useState(false)
@@ -124,7 +126,7 @@ const Home: NextPage = () => {
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <Map/>
           </TabPanel>
 
         </Box>
