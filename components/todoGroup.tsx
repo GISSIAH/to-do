@@ -6,6 +6,9 @@ import { useState } from 'react'
 import { addItem } from '../storage/storage';
 import GroupMenu from './group/groupMenu';
 import { item } from '../types/item';
+import dynamic from 'next/dynamic';
+
+const MapDialog = dynamic(() => import("../components/map/mapDialog"), { ssr: false })
 
 interface props {
     name: string,
@@ -18,6 +21,7 @@ const ToDoGroup: NextPage<props> = (props) => {
 
     const [dialogOpen, setDialogOpen] = useState(false)
     const [newItemDialog, setNewItemDialog] = useState(false)
+    const [locationDialog,setLocationDialog] = useState(false)
     const [item, setItem] = useState<string>("")
 
 
@@ -29,7 +33,7 @@ const ToDoGroup: NextPage<props> = (props) => {
                     <Typography variant='caption'>{items.length + " items"}</Typography>
                 </Box>
 
-                <GroupMenu group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} />
+                <GroupMenu setLocationDialog={setLocationDialog} group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} />
             </Box>
 
 
@@ -81,6 +85,8 @@ const ToDoGroup: NextPage<props> = (props) => {
                 </DialogContent>
 
             </Dialog>
+
+            <MapDialog  group={name} onItemAdded={onItemChanged} open={locationDialog} setOpen={setLocationDialog} />
         </Box>
     )
 }

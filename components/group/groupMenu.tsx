@@ -11,11 +11,12 @@ import { deleteGroup , pinGroup } from '../../storage/storage';
 interface props{
     group: string,
     setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ,
+    setLocationDialog: React.Dispatch<React.SetStateAction<boolean>>,
     onItemChanged : ()=>void
 }
 
 const GroupMenu: NextPage<props> = (props) => {
-    const {group,setNewItemDialog,onItemChanged} = props
+    const {group,setNewItemDialog,setLocationDialog,onItemChanged} = props
     const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLButtonElement | null>()
     const open = Boolean(anchorEl);
     return (
@@ -42,6 +43,9 @@ const GroupMenu: NextPage<props> = (props) => {
                     setNewItemDialog(true)
                 }}>
                     Add Item
+                </MenuItem>
+                <MenuItem onClick={()=>{setLocationDialog(true)}}>
+                    Add Location item
                 </MenuItem>
                 <MenuItem onClick={() => {
                     pinGroup(group)

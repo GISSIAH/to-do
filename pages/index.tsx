@@ -82,6 +82,7 @@ const Home: NextPage = () => {
                   addGroup({
                     name: newGroup,
                     items: [],
+                    locationItems:[],
                     pinned: false
                   })
                   const todo = getTodo()

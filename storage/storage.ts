@@ -1,5 +1,5 @@
 import { group } from "../types/group";
-import { item } from "../types/item";
+import { item ,locationItem} from "../types/item";
 
 export function getTodo(): { groups: Array<group> } {
   let todo: { groups: Array<group> } = {
@@ -59,6 +59,20 @@ export function addItem(item: string, groupName: string) {
   }
 }
 
+export function addLocationItem(item:locationItem,groupName:string){
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+
+    todo.groups.forEach((group) => {
+      if (group.name === groupName) {
+        group.locationItems.push(item);
+      }
+    });
+
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }
+}
+
 export function deleteItem(item: item, groupName: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
@@ -83,4 +97,21 @@ export function pinGroup(groupName:string){
     todo.groups = newTodoGroups
     localStorage.setItem("todo", JSON.stringify(todo));
   }
+}
+
+export function getLocationItems(): Array<locationItem> {
+  var markers: Array<locationItem> = [];
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+    
+    todo.groups.forEach((group) => {
+      group.locationItems.forEach((loc) => {
+        markers.push(loc);
+      });
+    });
+
+    return markers;
+  }
+
+  return markers
 }
