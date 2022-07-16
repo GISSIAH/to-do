@@ -147,13 +147,20 @@ function getOldestItem(): item {
   for (let i = 0; i < todo.groups.length; i++) {
 
     if (!todo.groups[i].items[0]) {
-      continue
+      if (todo.groups[i].locationItems[0]){
+        if (new Date(todo.groups[i].locationItems[0].date).getTime() < new Date(oldestItem.date).getTime()) {
+          oldestItem = todo.groups[i].locationItems[0]
+        }
+      }else{
+        continue
+      }
+      
     }
     else {
-
       if (new Date(todo.groups[i].items[0].date).getTime() < new Date(oldestItem.date).getTime()) {
         oldestItem = todo.groups[i].items[0]
       }
+      
     }
   }
   return oldestItem
