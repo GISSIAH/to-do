@@ -7,6 +7,7 @@ Data is stored locally in browser storage, no data is sent to any other api or 3
 - Next js
 - Material UI
 - localstorage
+- leaflet js for maps
 
 ## Install
 Run yarn install  
