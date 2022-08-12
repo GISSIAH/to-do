@@ -1,5 +1,7 @@
 import { group } from "../types/group";
-import { item ,locationItem} from "../types/item";
+import { item, locationItem ,mapItem} from "../types/item";
+
+
 
 export function getTodo(): { groups: Array<group> } {
   let todo: { groups: Array<group> } = {
@@ -35,11 +37,10 @@ export const addGroup = (group: group) => {
 export function deleteGroup(name: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
- 
-    
-    const newGroups = todo.groups.filter((group) => group.name !== name)
-    
-    todo.groups = newGroups
+
+    const newGroups = todo.groups.filter((group) => group.name !== name);
+
+    todo.groups = newGroups;
 
     localStorage.setItem("todo", JSON.stringify(todo));
   }
@@ -51,7 +52,7 @@ export function addItem(item: string, groupName: string) {
 
     todo.groups.forEach((group) => {
       if (group.name === groupName) {
-        group.items.push({title:item,date: new Date()});
+        group.items.push({ title: item, date: new Date() });
       }
     });
 
@@ -59,7 +60,7 @@ export function addItem(item: string, groupName: string) {
   }
 }
 
-export function addLocationItem(item:locationItem,groupName:string){
+export function addLocationItem(item: locationItem, groupName: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
@@ -73,45 +74,67 @@ export function addLocationItem(item:locationItem,groupName:string){
   }
 }
 
-export function deleteItem(item: item, groupName: string) {
+export function deleteItem(item: item | mapItem | locationItem, groupName: string, location: boolean) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
     let tempGroup = todo.groups.filter((group) => group.name == groupName);
-    //console.log(tempGroup);
-    
-    const newItems = tempGroup[0].items.filter((itemArr)=> itemArr.title !== item.title);
-    todo.groups.map((group) =>
-      group.name === groupName ? (group.items = newItems) : group
+    console.log(tempGroup);
+
+    if (location) {
+      const newItems = tempGroup[0].locationItems.filter(
+        (itemArr) => itemArr.title !== item.title
+      );
+      console.log(newItems);
+      
+      todo.groups.map((group) =>
+        group.name === groupName ? (group.locationItems = newItems) : group
+      );
+      localStorage.setItem("todo", JSON.stringify(todo));
+    } 
+    else {
+      const newItems = tempGroup[0].items.filter(
+        (itemArr) => itemArr.title !== item.title
+      );
+      todo.groups.map((group) =>
+        group.name === groupName ? (group.items = newItems) : group
+      );
+      localStorage.setItem("todo", JSON.stringify(todo));
+    }
+  }
+}
+
+export function pinGroup(groupName: string) {
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+
+    let newTodoGroups = todo.groups.map((group) =>
+      group.name === groupName
+        ? { ...group, pinned: true }
+        : { ...group, pinned: false }
     );
+
+    todo.groups = newTodoGroups;
     localStorage.setItem("todo", JSON.stringify(todo));
   }
 }
 
-export function pinGroup(groupName:string){
+export function getLocationItems(): Array<mapItem> {
+  var markers: Array<mapItem> = [];
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
-    let newTodoGroups = todo.groups.map(group => (group.name === groupName ) ? {...group,pinned:true}  : {...group,pinned:false} )
-
-    todo.groups = newTodoGroups
-    localStorage.setItem("todo", JSON.stringify(todo));
-  }
-}
-
-export function getLocationItems(): Array<locationItem> {
-  var markers: Array<locationItem> = [];
-  if (typeof window !== "undefined") {
-    const todo = getTodo();
-    
     todo.groups.forEach((group) => {
       group.locationItems.forEach((loc) => {
-        markers.push(loc);
+        markers.push({
+          ...loc,
+          group: group.name
+        });
       });
     });
 
     return markers;
   }
 
-  return markers
+  return markers;
 }

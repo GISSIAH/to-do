@@ -11,3 +11,7 @@ export interface locationItem{
         coordinates : Array<number>
     }
 }
+
+export interface mapItem extends locationItem {
+  group: string;
+}

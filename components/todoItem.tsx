@@ -16,7 +16,7 @@ const ToDoItem : NextPage<props> = (props)=>{
         <Box sx={{display:'flex',justifyContent:'space-between',px:1}}>
             <Typography>{item.title}</Typography>
             <DeleteIcon onClick={()=>{
-                deleteItem(item,group)
+                deleteItem(item,group,false)
                 onItemDeleted()
                 }} color="warning"/>
                 
