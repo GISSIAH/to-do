@@ -54,7 +54,6 @@ const Map: NextPage = () => {
 
                 }
 
-
             </MapContainer>
             <Dialog open={dialogOpen} onClose={() => { setDialogOpen(false) }}>
                 <DialogContent sx={{display:'flex',flexDirection:'column',gap:4}}>

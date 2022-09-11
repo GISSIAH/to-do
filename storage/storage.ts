@@ -138,3 +138,20 @@ export function getLocationItems(): Array<mapItem> {
 
   return markers;
 }
+
+export function setGroupColor(name: string, color: string) {
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+
+    todo.groups.map(group=>{
+      if(group.name === name){
+        group.color = color;
+        return group;
+      }
+
+      return group;
+    })
+
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }
+}

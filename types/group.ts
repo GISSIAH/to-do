@@ -4,4 +4,5 @@ export interface group {
   items: Array<item>;
   locationItems: Array<locationItem>
   pinned: boolean;
+  color: string;
 }

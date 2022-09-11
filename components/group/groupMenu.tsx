@@ -12,11 +12,12 @@ interface props{
     group: string,
     setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ,
     setLocationDialog: React.Dispatch<React.SetStateAction<boolean>>,
+    setColorPicker: React.Dispatch<React.SetStateAction<boolean>>,
     onItemChanged : ()=>void
 }
 
 const GroupMenu: NextPage<props> = (props) => {
-    const {group,setNewItemDialog,setLocationDialog,onItemChanged} = props
+    const {group,setNewItemDialog,setLocationDialog,onItemChanged, setColorPicker} = props
     const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLButtonElement | null>()
     const open = Boolean(anchorEl);
     return (
@@ -53,6 +54,12 @@ const GroupMenu: NextPage<props> = (props) => {
                     setAnchorEl(null)
                 }}>
                     Pin Group
+                </MenuItem>
+                <MenuItem onClick={() => {
+                    setColorPicker(true)
+                    setAnchorEl(null)
+                }}>
+                    Set Card Color
                 </MenuItem>
                 <MenuItem onClick={()=>{
                     deleteGroup(group)

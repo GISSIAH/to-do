@@ -83,7 +83,8 @@ const Home: NextPage = () => {
                     name: newGroup,
                     items: [],
                     locationItems:[],
-                    pinned: false
+                    pinned: false,
+                    color:""
                   })
                   const todo = getTodo()
                   setGroups(todo.groups)
@@ -113,14 +114,14 @@ const Home: NextPage = () => {
               {
                 groups.filter(group => group.pinned == true).map((item, i) => {
                   return (
-                    <ToDoGroup locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+                    <ToDoGroup cardColor={item.color} locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
                   )
                 })
               }
               {
                 groups.filter(group => group.pinned !== true).map((item, i) => {
                   return (
-                    <ToDoGroup locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+                    <ToDoGroup cardColor={item.color} locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
                   )
                 })
               }
