@@ -37,7 +37,7 @@ const ToDoGroup: NextPage<props> = (props: props) => {
                     <Typography variant='caption'>{(items.length + locationItemsCount) + " items"}</Typography>
                 </Box>
 
-                <GroupMenu setLocationDialog={setLocationDialog} group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} setColorPicker={setColorPicker} />
+                <GroupMenu cardColor={cardColor} setLocationDialog={setLocationDialog} group={name} setNewItemDialog={setNewItemDialog} onItemChanged={onItemChanged} setColorPicker={setColorPicker} />
             </Box>
 
 

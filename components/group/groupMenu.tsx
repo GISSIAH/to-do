@@ -13,17 +13,19 @@ interface props{
     setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ,
     setLocationDialog: React.Dispatch<React.SetStateAction<boolean>>,
     setColorPicker: React.Dispatch<React.SetStateAction<boolean>>,
+    cardColor: string,
     onItemChanged : ()=>void
 }
 
 const GroupMenu: NextPage<props> = (props) => {
-    const {group,setNewItemDialog,setLocationDialog,onItemChanged, setColorPicker} = props
+    const {group,cardColor,setNewItemDialog,setLocationDialog,onItemChanged, setColorPicker} = props
     const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLButtonElement | null>()
     const open = Boolean(anchorEl);
+
     return (
         <div>
-            <IconButton onClick={(e) => { setAnchorEl(e.currentTarget) }}>
-                <MoreVertIcon />
+            <IconButton sx={{ color: (cardColor ? 'white' : 'black')}} onClick={(e) => { setAnchorEl(e.currentTarget) }}>
+                <MoreVertIcon color={'inherit'}/>
             </IconButton>
             <Menu
                 id="long-menu"
