@@ -4,17 +4,17 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from 'react';
-import { deleteGroup , pinGroup } from '../../storage/storage';
+import { archiveGroup, deleteGroup , pinGroup } from '../../storage/storage';
 
 
 
 interface props{
-    group: string,
-    setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ,
-    setLocationDialog: React.Dispatch<React.SetStateAction<boolean>>,
-    setColorPicker: React.Dispatch<React.SetStateAction<boolean>>,
-    cardColor: string,
-    onItemChanged : ()=>void
+    group: string ;
+    setNewItemDialog?: React.Dispatch<React.SetStateAction<boolean>> ;
+    setLocationDialog?: React.Dispatch<React.SetStateAction<boolean>> ;
+    setColorPicker?: React.Dispatch<React.SetStateAction<boolean>> ;
+    cardColor?: string ;
+    onItemChanged : ()=>void ;
 }
 
 const GroupMenu: NextPage<props> = (props) => {
@@ -62,6 +62,14 @@ const GroupMenu: NextPage<props> = (props) => {
                     setAnchorEl(null)
                 }}>
                     Set Card Color
+                </MenuItem>
+                <MenuItem onClick={() => {
+                    archiveGroup(group)
+                    onItemChanged()
+                    setAnchorEl(null)
+
+                }}>
+                    Archive Group
                 </MenuItem>
                 <MenuItem onClick={()=>{
                     deleteGroup(group)

@@ -8,12 +8,14 @@ import { group } from "../types/group"
 import { item } from '../types/item';
 import TabPanel from '../components/tab/tab';
 import dynamic from 'next/dynamic';
+import ArchivedGroup from '../components/archivedGroup';
 
 const Map = dynamic(() => import("../components/map/map"), { ssr: false })
 const Home: NextPage = () => {
   const [groups, setGroups] = useState<Array<group>>([])
   const [newGroupDialog, setNewGroupDialog] = useState(false)
   const [newGroup, setNewGroup] = useState("")
+  const [archivedGroups , setArchivedGroups] = useState<Array<group>>([])
   const [alert,setAlert] = useState(true)
   const [oldestItem,setOldestItem] = useState<item>({title:"",date:new Date()})
 
@@ -26,6 +28,7 @@ const Home: NextPage = () => {
     const todo = getTodo()
     setOldestItem(getOldestItem())
     setGroups(todo.groups)
+    setArchivedGroups(todo.archivedGroups)
 
     setTimeout(() => {
       setAlert(false)
@@ -35,6 +38,7 @@ const Home: NextPage = () => {
   const itemAdded = () => {
     const todo = getTodo()
     setGroups(todo.groups)
+    setArchivedGroups(todo.archivedGroups)
   }
   return (
     <div>
@@ -55,6 +59,7 @@ const Home: NextPage = () => {
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <Tab label="List" {...a11yProps(0)} />
               <Tab label="Map" {...a11yProps(1)} />
+              <Tab label="Archived" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -129,6 +134,36 @@ const Home: NextPage = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Map/>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Box
+              display="flex"
+              flexDirection={{
+                xs: "column",
+                sm: "column",
+                md: "row",
+              }}
+              flexWrap="wrap"
+              justifyContent={{
+                xs: "flex-start",
+                sm: "flex-start",
+                md: "center"
+              }}
+              gap={{
+                xs: 4,
+                sm: 4,
+                md: 8
+              }}
+            >
+              {
+                archivedGroups.map((item, i) => {
+             
+                  return (
+                    <ArchivedGroup locationItemsCount={item.locationItems.length} name={item.name} items={item.items} key={i} onItemChanged={itemAdded} />
+                  )
+                })
+              }
+            </Box>
           </TabPanel>
 
         </Box>

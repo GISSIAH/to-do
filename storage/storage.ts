@@ -1,20 +1,22 @@
 import { group } from "../types/group";
-import { item, locationItem ,mapItem} from "../types/item";
+import { item, locationItem, mapItem } from "../types/item";
 
-
-
-export function getTodo(): { groups: Array<group> } {
-  let todo: { groups: Array<group> } = {
+export function getTodo() {
+  let todo: { groups: Array<group>; archivedGroups: Array<group> } = {
     groups: [],
+    archivedGroups: [],
   };
   if (typeof window !== "undefined") {
     const strGroups = localStorage.getItem("todo");
     const jsonTodo = JSON.parse(strGroups || "{}");
 
-    if (jsonTodo.groups) {
+    if (jsonTodo.groups && jsonTodo.archivedGroups) {
       jsonTodo.groups.forEach((element: group) => {
         todo.groups.push(element);
       });
+      jsonTodo.archivedGroups.forEach((element: group) =>{
+        todo.archivedGroups.push(element);
+      })
     }
   }
   return todo;
@@ -74,7 +76,11 @@ export function addLocationItem(item: locationItem, groupName: string) {
   }
 }
 
-export function deleteItem(item: item | mapItem | locationItem, groupName: string, location: boolean) {
+export function deleteItem(
+  item: item | mapItem | locationItem,
+  groupName: string,
+  location: boolean
+) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
@@ -86,13 +92,12 @@ export function deleteItem(item: item | mapItem | locationItem, groupName: strin
         (itemArr) => itemArr.title !== item.title
       );
       console.log(newItems);
-      
+
       todo.groups.map((group) =>
         group.name === groupName ? (group.locationItems = newItems) : group
       );
       localStorage.setItem("todo", JSON.stringify(todo));
-    } 
-    else {
+    } else {
       const newItems = tempGroup[0].items.filter(
         (itemArr) => itemArr.title !== item.title
       );
@@ -128,7 +133,7 @@ export function getLocationItems(): Array<mapItem> {
       group.locationItems.forEach((loc) => {
         markers.push({
           ...loc,
-          group: group.name
+          group: group.name,
         });
       });
     });
@@ -143,15 +148,44 @@ export function setGroupColor(name: string, color: string) {
   if (typeof window !== "undefined") {
     const todo = getTodo();
 
-    todo.groups.map(group=>{
-      if(group.name === name){
+    todo.groups.map((group) => {
+      if (group.name === name) {
         group.color = color;
         return group;
       }
 
       return group;
-    })
+    });
 
     localStorage.setItem("todo", JSON.stringify(todo));
   }
+}
+
+export function archiveGroup(name: string) {
+  if (typeof window !== "undefined") {
+    const todo = getTodo();
+    console.log(todo.archivedGroups);
+    const archivedGroup = todo.groups.filter(group=> group.name === name)[0];
+    
+    const groupList = todo.groups.filter(group=> group.name !== name )
+
+    todo.groups = groupList;
+    todo.archivedGroups.push(archivedGroup);
+    
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }
+}
+
+export function unArchiveGroup(name: string){
+ if (typeof window !== "undefined") {
+   const todo = getTodo();
+   const unArchivedGroup = todo.archivedGroups.filter((group) => group.name === name)[0];
+
+   const archivedGroupList = todo.archivedGroups.filter((group) => group.name !== name);
+
+   todo.archivedGroups = archivedGroupList;
+   todo.groups.push(unArchivedGroup);
+
+   localStorage.setItem("todo", JSON.stringify(todo));
+ } 
 }
