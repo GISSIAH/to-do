@@ -10,10 +10,10 @@ import { archiveGroup, deleteGroup , pinGroup } from '../../storage/storage';
 
 interface props{
     group: string ;
-    setNewItemDialog?: React.Dispatch<React.SetStateAction<boolean>> ;
-    setLocationDialog?: React.Dispatch<React.SetStateAction<boolean>> ;
-    setColorPicker?: React.Dispatch<React.SetStateAction<boolean>> ;
-    cardColor?: string ;
+    setNewItemDialog: React.Dispatch<React.SetStateAction<boolean>> ;
+    setLocationDialog: React.Dispatch<React.SetStateAction<boolean>> ;
+    setColorPicker: React.Dispatch<React.SetStateAction<boolean>> ;
+    cardColor: string ;
     onItemChanged : ()=>void ;
 }
 
