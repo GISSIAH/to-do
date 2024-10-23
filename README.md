@@ -13,5 +13,5 @@ Data is stored locally in browser storage, no data is sent to any other api or 3
 Run yarn install  
 
 ## Thoughts
-considering building chrome plugin to sync  data across all devices
+considering building chrome plugin
 
